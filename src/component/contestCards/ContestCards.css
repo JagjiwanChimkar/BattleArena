@@ -1,0 +1,13 @@
+.contestCards{
+    display: flex; 
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin: 0 50px;
+}
+
+@media only screen and (max-width: 768px) {
+    .contestCards{
+        flex-direction:column;
+        margin: 0;
+    }
+}
