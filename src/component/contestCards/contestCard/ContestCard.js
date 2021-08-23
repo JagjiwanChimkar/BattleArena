@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import firebase from "firebase";
 import "./contestCard.css";
 
-function ContestCard({ id, data }) {
+function ContestCard({ id, data,mode,category }) {
   let history = useHistory();
   const user = useSelector((state) => state.user);
 
@@ -23,7 +23,7 @@ function ContestCard({ id, data }) {
         .catch();
         return;
     }
-    history.push(`/join/${id}`);
+    history.push(`/contest/${mode}/${category}/join/${id}`);
   }
 
   return (

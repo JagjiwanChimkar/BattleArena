@@ -10,16 +10,25 @@ import { auth } from "./firebase";
 import { setUser } from "./actions/user";
 import Profile from "./component/profile/Profile";
 import Arenas from "./component/arenas/Arenas";
+import { db } from "./firebase";
+
 
 function App() {
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  
 
+  useEffect(() => {
+    console.log("app comp mounted");
     dispatch(getMatches());
 
     auth.onAuthStateChanged((authUser) => {
       console.log("THE USER IS >>> ", authUser);
+
+      db.collection("users")
+        .doc("uxsnJZY1bTybYmaCXkoy")
+        .get()
+        .then((snap) => console.log(snap.data().joined_contests[0]));
 
       if (authUser) {
         // the user just logged in / the user was logged in
@@ -34,21 +43,19 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <h1>Join and Win</h1>
-        <NavBar/>
+        <NavBar />
         <Switch>
-          <Route path='/profile'>
-            <Profile/>
+          <Route path="/profile">
+            <Profile />
+          </Route>
+          <Route exact path="/contest/:mode/:category">
+            <ContestCards />
           </Route>
           <Route path="/contest/:mode/:category/join/:id">
             <JoinContest />
           </Route>
-         
-          <Route  path="/contest/:mode/:category">
-            <ContestCards />
-          </Route>
           <Route path="/">
-            <Arenas/>
+            <Arenas />
           </Route>
         </Switch>
       </div>

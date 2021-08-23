@@ -10,6 +10,9 @@ var provider = new firebase.default.auth.GoogleAuthProvider();
 function SignIn() {
   const user = useSelector(state => state.user)
   const history=useHistory();
+
+ 
+
   const handleAuthenticaton = () => {
     if (user) {
       auth.signOut();
@@ -20,7 +23,7 @@ function SignIn() {
       .then(result=>{
         // console.log('from signin',result.user.metadata.creationTime)
         if(result.user.metadata.creationTime===result.user.metadata.lastSignInTime){
-          console.log('first time login');
+          console.log('New User');
         }
       })
       .catch()

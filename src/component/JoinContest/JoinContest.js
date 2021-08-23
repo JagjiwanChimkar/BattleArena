@@ -4,12 +4,12 @@ import axios from "axios";
 import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import firebase from "firebase";
 import { db } from "../../firebase";
+import firebase from "firebase";
 
 
 function JoinContest() {
-  let { id } = useParams(); //retrive id from '/join/:id'
+  let { mode,category,id } = useParams(); //retrive id from '/join/:id'
   const matches = useSelector((state) => state.matches);
    
   
@@ -19,42 +19,24 @@ function JoinContest() {
   });
 
   const history = useHistory();
-  
-
-  function loadScript(src) {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => {
-        resolve(true);
-      };
-
-      script.onerror = () => {
-        resolve(false);
-      };
-
-      document.body.appendChild(script);
-    });
-  }
-  
 
   async function handlePayment() {
     
-    const res = loadScript(
-      "https://checkout.razorpay.com/v1/checkout.js"
-    );
+    // const res = loadScript(
+    //   "https://checkout.razorpay.com/v1/checkout.js"
+    // );
 
-    if (!res) {
-      alert("Razorpay SDK failed to load. Are you online?");
-      return;
-    }
+    // if (!res) {
+    //   alert("Razorpay SDK failed to load. Are you online?");
+    //   return;
+    // }
 
     //https://homdeep-backend.herokuapp.com/razorpay
     //http://localhost:1337/razorpay
     //https://us-central1-homdeep-f855d.cloudfunctions.net/api/razorpay
     //http://localhost:5001/homdeep-f855d/us-central1/api/razorpay
     const { data } = await axios.post(
-      `https://us-central1-homdeep-f855d.cloudfunctions.net/api/razorpay/${id}`
+      `http://localhost:5001/homdeep-f855d/us-central1/api/razorpay/${mode}/${category}/${id}`
     );
 
     if (!data) {
@@ -81,7 +63,7 @@ function JoinContest() {
         };
 
         const confirmation = await axios.post(
-          "https://us-central1-homdeep-f855d.cloudfunctions.net/api/success",
+          "http://localhost:5001/homdeep-f855d/us-central1/api/success",
           dataConfirm
         );
 
@@ -90,13 +72,13 @@ function JoinContest() {
         if (confirmation.data.msg === "success") {
           alert("Payment Successful");
 
-          db.collection("Match")
-            .doc(id)
-            .update({
-              players: firebase.firestore.FieldValue.arrayUnion(
-                {username:user.username,bgmi_id:user.bgmi_id,order_id:confirmation.data.orderId}
-              )
-            });
+          db.collection(`modes/${mode}/${category}`)
+          .doc(id)
+          .update({
+            players: firebase.firestore.FieldValue.arrayUnion(
+              {username:user.username,bgmi_id:user.bgmi_id,order_id:confirmation.data.orderId}
+            )
+          });
         }
         history.replace("/");
       },
@@ -110,12 +92,15 @@ function JoinContest() {
     paymentObject.open();
   }
 
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    handlePayment();
+     handlePayment();
   };
 
+  
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -134,7 +119,7 @@ function JoinContest() {
           required
         />
         <button type="submit">
-          Pay ₹{matches.find((x) => x.id === id)?.data.entry_fee}
+          Pay ₹{matches.mode[mode][category].find((x) => x.id === id)?.data.entry_fee}
         </button>
       </form>
     </div>
