@@ -5,18 +5,18 @@ import JoinContest from "./component/JoinContest/JoinContest";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getMatches } from "./actions/matches";
-import NavBar from "./component/navbar/NavBar";
 import { auth } from "./firebase";
 import { setUser } from "./actions/user";
-import Profile from "./component/profile/Profile";
-import Arenas from "./component/arenas/Arenas";
 import { db } from "./firebase";
-
+import MyContests from "./component/mycontests/MyContests";
+import Home from "./component/home/Home";
+import Footer from "./component/footer/Footer";
+import Arenas from "./component/arenas/Arenas";
+import ScrollToTop from "./ScrollToTop";
+import Navbar from "./component/navbar/Navbar";
 
 function App() {
   const dispatch = useDispatch();
-
-  
 
   useEffect(() => {
     console.log("app comp mounted");
@@ -25,10 +25,41 @@ function App() {
     auth.onAuthStateChanged((authUser) => {
       console.log("THE USER IS >>> ", authUser);
 
-      db.collection("users")
+      //first move upcoming_contest to end_contest in user
+    db.doc('/modes/TDM/duo/5qX4CH8xizerhhv4nk8G')
+    .get()
+    .then(res=>{
+      db.collection('users/uxsnJZY1bTybYmaCXkoy/end_contests')
+      .doc('5qX4CH8xizerhhv4nk8G')
+      .set(res.data())
+    })
+      
+
+      //delete a upcoming_contest  from user
+    //   db.collection("users")
+    //     .doc("uxsnJZY1bTybYmaCXkoy")
+    //   .update({
+    //     upcoming_contest: firebase.firestore.FieldValue.arrayRemove(db.doc('/modes/TDM/duo/5qX4CH8xizerhhv4nk8G'))
+    // });
+
+    
+
+
+    //get upcoming_contest
+    db.collection("users")
         .doc("uxsnJZY1bTybYmaCXkoy")
         .get()
-        .then((snap) => console.log(snap.data().joined_contests[0]));
+        .then((snap) =>{
+        
+          if(snap.data().upcoming_contest){
+            snap.data().upcoming_contest.forEach(contest=>
+              contest.get()
+            .then((res) => console.log(res.data())))
+          }
+        }
+        );
+
+       
 
       if (authUser) {
         // the user just logged in / the user was logged in
@@ -42,11 +73,12 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop/>
       <div className="App">
-        <NavBar />
+        <Navbar />
         <Switch>
-          <Route path="/profile">
-            <Profile />
+          <Route path="/mycontests">
+            <MyContests />
           </Route>
           <Route exact path="/contest/:mode/:category">
             <ContestCards />
@@ -55,9 +87,11 @@ function App() {
             <JoinContest />
           </Route>
           <Route path="/">
+            <Home />
             <Arenas />
           </Route>
         </Switch>
+        <Footer/>
       </div>
     </Router>
   );

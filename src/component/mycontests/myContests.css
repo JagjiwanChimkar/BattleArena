@@ -1,0 +1,11 @@
+.myContests{
+    height:100vh;
+    background: #101522;
+    color: white;
+    
+}
+.myContestContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

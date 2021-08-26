@@ -1,10 +1,10 @@
-import { Paper } from "@material-ui/core";
 import React from "react";
 import Mode from "./mode/Mode";
+import './arenas.css'
 
 const Arenas = () => {
   return (
-    <div className="arenas" style={{display:"flex",flexDirection:"column",alignItems:"center",margin:"40px"}}>
+    <div className="arenas">
         <Mode mode="TDM" />
         <Mode mode="War" />
     </div>

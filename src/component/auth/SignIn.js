@@ -3,6 +3,7 @@ import firebase from "firebase";
 import { useSelector } from 'react-redux';
 import { auth } from '../../firebase';
 import { useHistory } from "react-router-dom";
+import './signIn.css';
 
 var provider = new firebase.default.auth.GoogleAuthProvider();
 // provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
@@ -34,7 +35,10 @@ function SignIn() {
 
   return (
     <>
-      <button onClick={handleAuthenticaton}>{user ? 'Sign Out' : 'Sign In'}</button>
+      <button className="signIn_btn"
+      onClick={handleAuthenticaton}
+      >{user ? 'Sign Out' : 'Sign In'}
+      </button>
     </>
   );
 }

@@ -1,23 +1,22 @@
-input {
-  width: 80%;
-  padding: 12px 20px;
-  margin: 20px;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+.joinContest{
+  height: 80vh;
+  padding-top:20px ;
+}
+h2{
+  text-align: center;
 }
 
-button {
+
+.join_btn {
     display: block;
-    background-color: #e5ff00;;
+    background-color: #4B59F7;
+    color: white;
     border: none;
-    padding: 8px 0;
+    padding: 8px 50px;
     text-align: center;
     text-decoration: none;
     font-size: 20px;
     font-weight: 550;
     margin:auto;
-    width: 70%;
-    border-radius: 10px;
+    border-radius: 5px;
   }

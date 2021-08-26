@@ -1,0 +1,8 @@
+.arenas{
+    background: #101522;
+    color: white;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding: 20px 20px;
+}

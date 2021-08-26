@@ -1,42 +1,69 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import SignIn from "../auth/SignIn";
-import "./navbar.css";
-// import { Button, IconButton, Typography } from "@material-ui/core";
-// import MenuIcon from '@material-ui/icons/Menu';
-// import AppBar from '@material-ui/core/AppBar';
-// import Toolbar from '@material-ui/core/Toolbar';
+import React, { useState} from 'react';
+import MenuRoundedIcon from "@material-ui/icons/MenuRounded";
+import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+
+import {
+  Nav,
+  NavbarContainer,
+  NavLogo,
+  MobileIcon,
+  NavMenu,
+  NavItem,
+  NavItemBtn,
+  NavLinks,
+} from './Navbar.elements';
+import SignIn from '../auth/SignIn';
+import { useSelector } from 'react-redux';
 
 
-const NavBar = () => {
+function Navbar() {
+  const [click, setClick] = useState(false);
+  
   const user = useSelector((state) => state.user);
+
+  const handleClick = () => setClick(!click);
+  const closeMobileMenu = () => setClick(false);
+
   return (
     <>
-    
-
-      <Link to="/">
-        <h1>Join and Win</h1>
-      </Link>
-
-      <div className="navbar">
-        <div className="signin">
-          <h4 style={{ textAlign: "center" }}>
-            Hello {!user ? "Guest" : user.displayName}
-          </h4>
-          <span>
-            <SignIn />
-          </span>
-        </div>
-
-        <Link to="/profile">
-          <div className="profile">
-            <p>Profile</p>
-          </div>
-        </Link>
-      </div>
+        <Nav>
+          <NavbarContainer>
+            <NavLogo to='/' onClick={closeMobileMenu}>
+             BattleArena
+            </NavLogo>
+            <MobileIcon onClick={handleClick}>
+              {click ?<CloseRoundedIcon style={{fontSize: '32px'}} /> : <MenuRoundedIcon style={{fontSize: '32px'}} />}
+            </MobileIcon>
+            <NavMenu onClick={handleClick} click={click}>
+              <NavItem>
+                <NavLinks to='/' onClick={closeMobileMenu}>
+                  Home
+                </NavLinks>
+              </NavItem>
+              {user && 
+              <NavItem>
+              <NavLinks to='/mycontests' onClick={closeMobileMenu}>
+              My Contests
+              </NavLinks>
+            </NavItem>}
+              <NavItem>
+                <NavLinks to='/contact' onClick={closeMobileMenu}>
+                Contact Us
+                </NavLinks>
+              </NavItem>
+              <NavItem>
+                <NavLinks to='/about' onClick={closeMobileMenu}>
+                  About Us
+                </NavLinks>
+              </NavItem>
+              <NavItemBtn>
+              <SignIn />
+              </NavItemBtn>
+            </NavMenu>
+          </NavbarContainer>
+        </Nav>
     </>
   );
-};
+}
 
-export default NavBar;
+export default Navbar;
