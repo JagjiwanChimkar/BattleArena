@@ -14,7 +14,7 @@ const Footer = () => {
         <Link to="/" className="logo">
            BattleArena
         </Link>
-        <small className="websiteRight">ULTRA © 2020</small>
+        <small className="websiteRight">BattleArena © 2021</small>
         <div className="socialIcons">
         
         <a href='/' target='_blank' className="socialIconsLink" aria-label='Instagram'><InstagramIcon/></a>

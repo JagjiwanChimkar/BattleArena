@@ -5,18 +5,19 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-// import CardActions from '@material-ui/core/CardActions';
-// import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
     root: {
-      minWidth: 200,
+      minWidth: 180,
       maxWidth: 345,
     },
     media: {
-      height: 140,
+      height: 120,
     },
+    content:{
+      padding: 5,
+    }
   });
 
 const CategoryCard = ({mode,category}) => {
@@ -25,7 +26,7 @@ const CategoryCard = ({mode,category}) => {
     const handleClick=()=>{
         history.push(`/contest/${mode}/${category.name}`);
     }
-
+    
     return (
         <Card className={classes.root} >
         <CardActionArea onClick={handleClick} >
@@ -34,9 +35,9 @@ const CategoryCard = ({mode,category}) => {
             image="https://images.indianexpress.com/2020/09/PUBG-mobile-1.jpg"
             title="Contemplative Reptile"
           />
-          <CardContent>
+          <CardContent className={classes.content}>
             <Typography gutterBottom variant="h5" component="h2">
-              {category.name[0].toUpperCase()+category.name.substring(1)}
+              {category.name}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
             {category.info}

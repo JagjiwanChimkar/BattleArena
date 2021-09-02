@@ -13,19 +13,19 @@ const Mode = ({ mode }) => {
           <Grid item xs={12} sm={4}>
             <CategoryCard
               mode={mode}
-              category={{ name: "solo", info: "1 vs 1", img: "" }}
+              category={{ name: "Solo", info: "1 vs 1", img: "" }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <CategoryCard
               mode={mode}
-              category={{ name: "duo", info: "2 vs 2", img: "" }}
+              category={{ name: "Duo", info: "2 vs 2", img: "" }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <CategoryCard
               mode={mode}
-              category={{ name: "squad", info: "4 vs 4", img: "" }}
+              category={{ name: "Squad", info: "4 vs 4", img: "" }}
             />
           </Grid>
         </Grid>
@@ -37,19 +37,19 @@ const Mode = ({ mode }) => {
           <Grid item xs={12} sm={4}>
             <CategoryCard
               mode={mode}
-              category={{ name: "solo", info: "Solo:", img: "" }}
+              category={{ name: "Solo", info: "Solo:", img: "" }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <CategoryCard
               mode={mode}
-              category={{ name: "duo", info: "Duo:", img: "" }}
+              category={{ name: "Duo", info: "Duo:", img: "" }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <CategoryCard
               mode={mode}
-              category={{ name: "squad", info: "Squad:", img: "" }}
+              category={{ name: "Squad", info: "Squad:", img: "" }}
             />
           </Grid>
         </Grid>

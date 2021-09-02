@@ -1,21 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ContestCard from "./contestCard/ContestCard";
 import "./ContestCards.css";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import NoContest from "./NoContest";
+import { db } from "../../firebase";
 
 function ContestCards() {
   const { mode, category } = useParams();
-  const matches = useSelector((state) => state?.matches.mode[mode][category]);
-  // console.log('contestcard:',matches)
-
+  const [contests, setContests] = useState([]);
+  
+ useEffect(() => {
+   db.collection(`modes/${mode}/${category}`)
+   .onSnapshot(snap=>{
+    setContests(snap.docs.map(match=>({
+       id:match.id,
+       data:match.data()
+     })))
+   })
+  
+ }, [])
   return (
     <div className="contestCardsContainer">
         <p>{`${mode}-${category.toUpperCase()}`}</p>
-      {matches.length ? (
+      {contests?.length ? (
         <div className="contestCards">
-          {matches?.map((match) => (
+          {contests?.map((match) => (
             <ContestCard
               key={match.id}
               id={match.id}

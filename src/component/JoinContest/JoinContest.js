@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { db } from "../../firebase";
 import firebase from "firebase";
-import { TextField } from "@material-ui/core";
+import { CircularProgress, TextField } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
 import "./JoinContest.css";
 
@@ -23,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
 
 function JoinContest() {
   const classes = useStyles();
-  let { mode, category, id } = useParams(); //retrive id from '/join/:id'
-  const { matches, user } = useSelector((state) => state);
-  // console.log(matches.mode[mode][category].filter(data=>data.id==id)[0].data)
-  let playersNumber = { solo: 1, duo: 2, squad: 4 };
+  let { mode, category, id } = useParams(); 
+  const {user} = useSelector((state) => state);
+  const [data, setData] = useState({});
+  
+  let playersNumber = { Solo: 1, Duo: 2, Squad: 4 };
 
   const players = [
     {
@@ -48,6 +49,24 @@ function JoinContest() {
   ];
 
   const history = useHistory();
+  
+  
+
+  const getData=async()=>{
+    await axios.post(
+      `https://us-central1-homdeep-f855d.cloudfunctions.net/api/razorpay/${mode}/${category}/${id}`
+    )
+    .then(res=>setData(res.data));
+   
+  }
+  useEffect(() => {
+    getData(); 
+    return ()=>{
+      setData({})
+    }
+  }, [])
+
+  console.log(data);
 
   async function handlePayment() {
     // const res = loadScript(
@@ -63,9 +82,7 @@ function JoinContest() {
     //http://localhost:1337/razorpay
     //https://us-central1-homdeep-f855d.cloudfunctions.net/api/razorpay
     //http://localhost:5001/homdeep-f855d/us-central1/api/razorpay
-    const { data } = await axios.post(
-      `https://us-central1-homdeep-f855d.cloudfunctions.net/api/razorpay/${mode}/${category}/${id}`
-    );
+    
 
     if (!data) {
       alert("Server error. Are you online?");
@@ -177,14 +194,14 @@ function JoinContest() {
               />
             </div>
           ))}
-
-        <button type="submit" className="join_btn">
-          Pay ₹
-          {
-            matches.mode[mode][category].find((x) => x.id === id)?.data
-              .entry_fee
-          }
-        </button>
+        {
+          data.amount?
+            (<button type="submit" className="join_btn">
+            Pay ₹
+            {data?.amount/100}
+           </button>):<CircularProgress />
+        }
+        
       </form>
     </div>
   );

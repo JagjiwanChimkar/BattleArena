@@ -93,82 +93,10 @@ app.post("/success", (req, res) => {
   }
 });
 
-
-
-
-
-
-// app.post("/razorpay/:mode/:category/:id", async (req, res) => {
-//     const {mode,category,id}=req.params;
-//     try {
-//       const doc = await db.collection(`/modes/${mode}/${category}`).doc(id).get();
-//       const data=doc.data();
-      
-//       var options = {
-//         amount: data.entry_fee*100, // amount in the smallest currency unit
-//         currency: "INR",
-//         receipt:  shortid.generate(),
-//       };
-//       const response = await razorpay.orders.create(options);
-//       console.log(response);
-  
-//       res.send({
-//         id: response.id,
-//         currency: response.currency,
-//         amount: response.amount,
-//       });
-//     } catch (error) {
-//       console.log(error);
-//     }
-// });
-  
-// app.post("/success", (req, res) => {
-//     try {
-      
-//       const {
-//         amount,
-//         razorpayPaymentId,
-//         razorpayOrderId,
-//         razorpaySignature,
-//       } = req.body;
-
-//       var options = {
-//         amount: amount, // amount in the smallest currency unit
-//         currency: "INR",
-//         receipt:  shortid.generate(),
-//       };
-
-//       razorpay.orders.create(options);
-//       // do a validation
-//       //const secret = functions.config().test.key_secret;
-//       const secret ="JlflSpIfuRB4hAQIqjMuL7Yi";
-
-      
-  
-//       //console.log("req.body : ", req.body);
-  
-      
-  
-//       const shasum = crypto.createHmac("sha256", secret);
-//       shasum.update(`${orderCreationId}|${razorpayPaymentId}`);
-//       const digest = shasum.digest("hex");
-  
-      
-  
-//       if (digest === razorpaySignature) {
-//         console.log("Transaction is legit");
-//       } 
-      
-//       res.json({
-//           msg: 'success',
-//           orderId: razorpayOrderId,
-//           paymentId: razorpayPaymentId,
-//         });
-        
-//     } catch (error) {
-//       res.status(500).send(error);
-//     }
-// });
+app.get('/getUsers',(req,res)=>{
+  const liam =  db.collection('users').get();
+  res.send(liam);
+})
 
 // - Listen command
 exports.api = functions.https.onRequest(app);
