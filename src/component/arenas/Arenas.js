@@ -2,11 +2,11 @@ import React from "react";
 import Mode from "./mode/Mode";
 import './arenas.css'
 
-const Arenas = () => {
+const Arenas = ({myRef}) => {
   return (
-    <div className="arenas">
+    <div className="arenas" ref={myRef}>
         <Mode mode="TDM" />
-        <Mode mode="War" />
+        <Mode mode="Classic" />
     </div>
   );
 };

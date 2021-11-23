@@ -43,6 +43,21 @@
   padding-bottom: 60px;
 }
 
+.join_discord{
+   margin-top: 30px; 
+   color:whitesmoke;
+   padding: 0;
+}
+
+.join_discord h3{
+  line-height: 1px;
+}
+
+.discord_icon img{
+  height:70px;
+}
+
+
 .heading {
   margin-bottom: 24px;
   font-size: 48px;

@@ -35,20 +35,15 @@ function Navbar() {
               {click ?<CloseRoundedIcon style={{fontSize: '32px'}} /> : <MenuRoundedIcon style={{fontSize: '32px'}} />}
             </MobileIcon>
             <NavMenu onClick={handleClick} click={click}>
-              <NavItem>
-                <NavLinks to='/' onClick={closeMobileMenu}>
-                  Home
-                </NavLinks>
-              </NavItem>
               {user && 
               <NavItem>
               <NavLinks to='/mycontests' onClick={closeMobileMenu}>
-              My Contests
+                My Contests
               </NavLinks>
             </NavItem>}
-              <NavItem>
-                <NavLinks to='/contact' onClick={closeMobileMenu}>
-                Contact Us
+            <NavItem>
+                <NavLinks to='/rules' onClick={closeMobileMenu}>
+                  Rules
                 </NavLinks>
               </NavItem>
               <NavItem>

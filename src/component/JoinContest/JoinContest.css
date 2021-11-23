@@ -1,13 +1,16 @@
 .joinContest{
-  height: 80vh;
+  min-height: 90vh;
   padding-top:20px ;
 }
 h2{
   text-align: center;
 }
+.player_detail{
+  display: flex;
+  justify-content: center;
+}
 
-
-.join_btn {
+.payment_btn {
     display: block;
     background-color: #4B59F7;
     color: white;
@@ -17,6 +20,30 @@ h2{
     text-decoration: none;
     font-size: 20px;
     font-weight: 550;
-    margin:auto;
+    margin: auto;
+    margin-top:20px;
     border-radius: 5px;
+    width: 30%;
   }
+
+  .payment_btn:hover{
+    transition: all 0.3s ease-out;
+    background: #fff;
+    background-color:#0467FB;
+  }
+
+  .payment_btn:disabled {
+    background: #dddddd;
+  }
+
+  .rulesBtn{
+    text-decoration: underline;
+    color:black;
+    text-align:center;
+    margin-top:30px;
+  }
+  @media only screen and (max-width: 768px) {
+    .payment_btn{
+      width: 80%;
+    }
+}

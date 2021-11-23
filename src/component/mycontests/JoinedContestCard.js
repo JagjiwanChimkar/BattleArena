@@ -2,12 +2,13 @@ import moment from 'moment';
 import React from 'react';
 import './JoinedContestCard.css'
 
-const JoinedContestCard = ({contest}) => {
-    console.log(contest)
+const JoinedContestCard = ({id,contest}) => {
+    const date=moment(contest.date_time.substr(0,contest.date_time.indexOf('T'),["YYYY-MM-DD"])).format('DD-MM-YYYY');
+    const time=moment(contest.date_time.substr(contest.date_time.indexOf('T')+1),["HH:mm"]).format("hh:mm a");
     return (
         <div className="card">
           <div className="contest-id">
-           <p> Contest-Id : &emsp; {contest.id}</p>
+           <p> Contest-Id : &emsp; {id}</p>
           </div>
         <div className="container">
           <div className="prize">
@@ -25,11 +26,11 @@ const JoinedContestCard = ({contest}) => {
         <div className="info">
           <div>
             <p>Date</p>
-            <h5>{moment(contest.date_time.substr(0,contest.date_time.indexOf('T'),["YYYY-MM-DD"])).format('DD-MM-YYYY')}</h5>
+            <h5>{date}</h5>
           </div>
           <div>
             <p>Time</p>
-            <h5>{moment(contest.date_time.substr(contest.date_time.indexOf('T')+1),["HH:mm"]).format("hh:mm a") }</h5>
+            <h5>{time}</h5>
           </div>
           <div>
             <p>Map</p>
